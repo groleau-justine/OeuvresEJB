@@ -151,6 +151,7 @@ public class slOeuvres extends HttpServlet {
             vueReponse = "catalogue.oe";           
             return (vueReponse);  
         } catch (Exception e) {
+             //Erreur transaction aborded avant l'erreur MySQLIntegrityConstraintViolationException
             erreur = e.getMessage();
             if(erreur.contains("FK_RESERVATION_OEUVRE"))
                 erreur = "Il n'est pas possible de supprimer l'oeuvre : " + titre + " car elle a été réservée !";            

@@ -69,12 +69,13 @@ public class OeuvreFacade {
         em.merge(oeuvre);
     }
     
-    public String deleteOeuvreById(int idOeuvre) throws Exception{        
-        String titre;
+    public String deleteOeuvreById(int idOeuvre) throws Exception{     
+        String titre="";
         try{
-            Oeuvre oeuvre = findOeuvreById(idOeuvre);
-            titre = oeuvre.getTitre();
+            Oeuvre oeuvre = findOeuvreById(idOeuvre);         
             em.remove(oeuvre);
+            titre = oeuvre.getTitre();        
+            
         }catch(Exception e){
             throw e;
         }       

@@ -137,8 +137,6 @@ public class slReservation extends HttpServlet {
         int id_oeuvre;
         try {
             id_oeuvre = Integer.parseInt(request.getParameter("id"));
-          
-            
             date = request.getParameter("txtDate");
             int id_adherent = Integer.parseInt(request.getParameter("lstAdherents"));
             
@@ -146,6 +144,7 @@ public class slReservation extends HttpServlet {
             
             return ("listeReservations.res");
         } catch (Exception e) {
+            //Erreur transaction aborded avant l'erreur MySQLIntegrityConstraintViolationException
             erreur = e.getMessage();
             if(erreur.contains("PRIMARY"))
                 erreur = "L'oeuvre " + titre + " a déjà été réservée pour le : " + date + " !";            

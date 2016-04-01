@@ -57,7 +57,7 @@ public class Oeuvre implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "prix")
     private BigDecimal prix;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "oeuvre")
+    @OneToMany(mappedBy = "oeuvre")
     private List<Reservation> reservationList;
     @JoinColumn(name = "id_proprietaire", referencedColumnName = "id_proprietaire")
     @ManyToOne(optional = false)
