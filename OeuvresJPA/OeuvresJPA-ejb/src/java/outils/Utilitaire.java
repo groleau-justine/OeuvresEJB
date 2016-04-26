@@ -4,9 +4,7 @@
  */
 package outils;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 /**
  *
@@ -49,5 +47,20 @@ public class Utilitaire {
         } catch (Exception e) {
         }
         return date_retour;
+    }
+    
+    /**
+     * Remonte à la cause initiale d'une Exception
+     * @param e : Exception reçue
+     * @return Message de l'exception d'origine
+     */
+    public static String getExceptionCause(Exception e){
+        Throwable origine = (Throwable)e;
+        Throwable src = origine.getCause();
+        while (src != null){
+            origine = src;
+            src = origine.getCause();
+        }
+        return origine.getMessage();
     }
 }

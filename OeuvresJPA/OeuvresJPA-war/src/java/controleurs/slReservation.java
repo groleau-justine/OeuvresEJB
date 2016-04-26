@@ -139,13 +139,13 @@ public class slReservation extends HttpServlet {
             id_oeuvre = Integer.parseInt(request.getParameter("id"));
             date = request.getParameter("txtDate");
             int id_adherent = Integer.parseInt(request.getParameter("lstAdherents"));
-            
-            titre = reservationF.addReservation(id_oeuvre, Utilitaire.StrToDate(date, "yyyy-MM-dd"), id_adherent);
+            Oeuvre oeuvre = oeuvreF.findOeuvreById(id_oeuvre);
+            titre = oeuvre.getTitre();
+            reservationF.addReservation(id_oeuvre, Utilitaire.StrToDate(date, "yyyy-MM-dd"), id_adherent);
             
             return ("listeReservations.res");
         } catch (Exception e) {
-            //Erreur transaction aborded avant l'erreur MySQLIntegrityConstraintViolationException
-            erreur = e.getMessage();
+            erreur = Utilitaire.getExceptionCause(e);
             if(erreur.contains("PRIMARY"))
                 erreur = "L'oeuvre " + titre + " a déjà été réservée pour le : " + date + " !";            
             throw new Exception(erreur);

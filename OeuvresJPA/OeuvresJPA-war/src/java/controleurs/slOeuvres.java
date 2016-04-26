@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import outils.Utilitaire;
 import session.OeuvreFacade;
 import session.ProprietaireFacade;
 
@@ -146,13 +147,16 @@ public class slOeuvres extends HttpServlet {
         try {
             id = request.getParameter("id");
             id_oeuvre = Integer.parseInt(id);
-            titre = oeuvreF.deleteOeuvreById(id_oeuvre);
+            
+            Oeuvre oeuvre = oeuvreF.findOeuvreById(id_oeuvre);
+            titre=oeuvre.getTitre();
+            
+            oeuvreF.deleteOeuvreById(id_oeuvre);
 
             vueReponse = "catalogue.oe";           
             return (vueReponse);  
         } catch (Exception e) {
-             //Erreur transaction aborded avant l'erreur MySQLIntegrityConstraintViolationException
-            erreur = e.getMessage();
+            erreur = Utilitaire.getExceptionCause(e);
             if(erreur.contains("FK_RESERVATION_OEUVRE"))
                 erreur = "Il n'est pas possible de supprimer l'oeuvre : " + titre + " car elle a été réservée !";            
             throw new Exception(erreur);
@@ -254,7 +258,7 @@ public class slOeuvres extends HttpServlet {
      * @return String texte de la demande
      */
     private String getDemande(HttpServletRequest request) {
-        String demande = "";
+        String demande;
         demande = request.getRequestURI();
         demande = demande.substring(demande.lastIndexOf("/") + 1);
         return demande;

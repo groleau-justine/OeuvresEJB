@@ -59,10 +59,10 @@ public class ReservationFacade {
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public String addReservation(int idOeuvre, Date dateReservation, int idAdherent){
+    public void addReservation(int idOeuvre, Date dateReservation, int idAdherent){
        
         Reservation reservation = new Reservation();
-        
+           
         Oeuvre oeuvre = oeuvreF.findOeuvreById(idOeuvre);
         reservation.setOeuvre(oeuvre);
         
@@ -75,8 +75,6 @@ public class ReservationFacade {
         reservation.setStatut("Attente");
         
         em.persist(reservation);  
-        
-        return oeuvre.getTitre();
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
